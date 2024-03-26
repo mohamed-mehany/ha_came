@@ -70,24 +70,17 @@ class CameCoverEntity(CameEntity, CoverEntity):
         """Return true if cover is open."""
         return self._device.state == OPENING_STATE_OPEN
 
-    def open(self, **kwargs):
+    def open_cover(self):
         """Open the cover."""
         _LOGGER.debug("Open the cover %s", self.entity_id)
         self._device.open()
 
-
-    def stop(self, **kwargs):
+    def stop_cover(self):
         """Instruct the cover to stop."""
         _LOGGER.debug("Stop the cover %s", self.entity_id)
         self._device.stop()
 
-    def open_cover(self):
-        self._device.open()
-
     def close_cover(self):
-        self._device.close()
-
-    def close(self, **kwargs):
         """Instruct the cover to close."""
         _LOGGER.debug("Stop the cover %s", self.entity_id)
         self._device.close()
