@@ -12,7 +12,7 @@ from homeassistant.components.climate.const import (
     HVACMode,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import ATTR_TEMPERATURE, PRECISION_TENTHS, TEMP_CELSIUS
+from homeassistant.const import ATTR_TEMPERATURE, PRECISION_TENTHS, UnitOfTemperature
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from pycame.came_manager import CameManager
@@ -96,7 +96,7 @@ class CameClimateEntity(CameEntity, ClimateEntity):
             | (ClimateEntityFeature.FAN_MODE if self._device.support_fan_speed else 0)
         )
         self._attr_target_temperature_step = PRECISION_TENTHS
-        self._attr_temperature_unit = TEMP_CELSIUS
+        self._attr_temperature_unit = UnitOfTemperature.CELSIUS
 
     @property
     def current_temperature(self) -> Optional[float]:
