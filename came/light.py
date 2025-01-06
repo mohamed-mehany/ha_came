@@ -10,6 +10,7 @@ from homeassistant.components.light import (
     SUPPORT_COLOR,
     LightEntity,
     LightEntityFeature,
+    ColorMode,
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
@@ -68,6 +69,8 @@ class CameLightEntity(CameEntity, LightEntity):
         self._attr_supported_features = (
             SUPPORT_BRIGHTNESS if self._device.support_brightness else LightEntityFeature(0)
         ) | (SUPPORT_COLOR if self._device.support_color else LightEntityFeature(0))
+        self._attr_supported_color_modes = set(ColorMode.ONOFF)
+        self._attr_color_mode = ColorMode.ONOFF
 
     @property
     def is_on(self):
