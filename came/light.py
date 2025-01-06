@@ -65,8 +65,8 @@ class CameLightEntity(CameEntity, LightEntity):
         self.entity_id = ENTITY_ID_FORMAT.format(self.unique_id)
 
         self._attr_supported_features = (
-            SUPPORT_BRIGHTNESS if self._device.support_brightness else 0
-        ) | (SUPPORT_COLOR if self._device.support_color else 0)
+            SUPPORT_BRIGHTNESS if self._device.support_brightness else LightEntityFeature(0)
+        ) | (SUPPORT_COLOR if self._device.support_color else LightEntityFeature(0))
 
     @property
     def is_on(self):
