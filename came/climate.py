@@ -5,9 +5,6 @@ from typing import Optional
 from homeassistant.components.climate import DOMAIN as CLIMATE_DOMAIN
 from homeassistant.components.climate import (
     ENTITY_ID_FORMAT,
-    SUPPORT_FAN_MODE,
-    SUPPORT_TARGET_HUMIDITY,
-    SUPPORT_TARGET_TEMPERATURE,
     ClimateEntity,
 )
 from homeassistant.components.climate.const import (
@@ -91,12 +88,12 @@ class CameClimateEntity(CameEntity, ClimateEntity):
 
         self._attr_supported_features = (
             (
-                SUPPORT_TARGET_TEMPERATURE
+                ClimateEntityFeature.TARGET_TEMPERATURE
                 if self._device.support_target_temperature
                 else 0
             )
-            | (SUPPORT_TARGET_HUMIDITY if self._device.support_target_humidity else 0)
-            | (SUPPORT_FAN_MODE if self._device.support_fan_speed else 0)
+            | (ClimateEntityFeature.TARGET_HUMIDITY if self._device.support_target_humidity else 0)
+            | (ClimateEntityFeature.FAN_MODE if self._device.support_fan_speed else 0)
         )
         self._attr_target_temperature_step = PRECISION_TENTHS
         self._attr_temperature_unit = TEMP_CELSIUS
