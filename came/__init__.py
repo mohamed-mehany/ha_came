@@ -147,9 +147,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             config_entries_key = f"{ha_type}.{DOMAIN}"
             if config_entries_key not in hass.data[DOMAIN][CONF_ENTRY_IS_SETUP]:
                 hass.data[DOMAIN][CONF_PENDING][ha_type] = dev_ids
-                hass.async_create_task(
-                    hass.config_entries.async_forward_entry_setup(entry, ha_type)
-                )
+                await hass.config_entries.async_forward_entry_setup(entry, ha_type)
                 hass.data[DOMAIN][CONF_ENTRY_IS_SETUP].add(config_entries_key)
             else:
                 async_dispatcher_send(
