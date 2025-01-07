@@ -66,11 +66,20 @@ class CameLightEntity(CameEntity, LightEntity):
         super().__init__(device)
         self.entity_id = ENTITY_ID_FORMAT.format(self.unique_id)
 
-        self._attr_supported_features = (
-            SUPPORT_BRIGHTNESS if self._device.support_brightness else LightEntityFeature(0)
-        ) | (SUPPORT_COLOR if self._device.support_color else LightEntityFeature(0))
-        self._attr_supported_color_modes = set(ColorMode.ONOFF)
-        self._attr_color_mode = ColorMode.ONOFF
+        self._attr_supported_color_modes = set()
+        self._attr_color_mode: Optional[ColorMode] = None
+
+        if self._device.support_brightness:
+            self._attr_supported_color_modes.add(ColorMode.BRIGHTNESS)
+
+        if self._device.support_color:
+            self._attr_supported_color_modes.add(ColorMode.HS)
+            self._attr_color_mode = ColorMode.HS
+        else:
+            self._attr_color_mode = ColorMode.BRIGHTNESS
+
+        if not self._attr_supported_color_modes:
+            self._attr_supported_color_modes.add(ColorMode.BRIGHTNESS)  # Assicurati di avere un modo valido
 
     @property
     def is_on(self):
@@ -106,3 +115,8 @@ class CameLightEntity(CameEntity, LightEntity):
         if not self._device.support_color:
             return None
         return tuple(self._device.hs_color)
+
+    @property
+    def color_mode(self) -> Optional[ColorMode]:
+        """Return the color mode of the light."""
+        return self._attr_color_mode

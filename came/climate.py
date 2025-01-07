@@ -94,6 +94,8 @@ class CameClimateEntity(CameEntity, ClimateEntity):
             )
             | (ClimateEntityFeature.TARGET_HUMIDITY if self._device.support_target_humidity else 0)
             | (ClimateEntityFeature.FAN_MODE if self._device.support_fan_speed else 0)
+            | ClimateEntityFeature.TURN_ON 
+            | ClimateEntityFeature.TURN_OFF
         )
         self._attr_target_temperature_step = PRECISION_TENTHS
         self._attr_temperature_unit = UnitOfTemperature.CELSIUS
